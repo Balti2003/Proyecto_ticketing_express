@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import usersRoutes from './routes/usersRoutes.js';
 
 const app = express();
 const DB_URL = process.env.NODE_ENV === 'test' 
@@ -18,5 +19,7 @@ app.use(express.json()); // middleware para parsear JSON en las peticiones
 app.get('/', (req, res) => {
     res.status(200).send('Welcome to the Ticketing System!!');
 });
+
+app.use('/api/users', usersRoutes);
 
 export default app;
