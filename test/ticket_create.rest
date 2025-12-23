@@ -1,0 +1,8 @@
+POST http://localhost:4000/api/tickets/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "user": "2b62275f-4195-46c8-bbf5-628e39089040",
+    "title": "Ticket 1",
+    "description": "Unable to login with correct credentials."
+}

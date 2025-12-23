@@ -3,6 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import usersRoutes from './routes/usersRoutes.js';
+import ticketsRoutes from './routes/ticketsRoutes.js';
 
 const app = express();
 const DB_URL = process.env.NODE_ENV === 'test' 
@@ -21,5 +22,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/users', usersRoutes);
+app.use('/api/tickets', ticketsRoutes);
 
 export default app;
