@@ -1,8 +1,8 @@
 POST http://localhost:4000/api/tickets/ HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTU3ZmMxNDM0OWZhZGZmMzYwZmRiYzUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjczNzQxNDgsImV4cCI6MTc2NzM3Nzc0OH0.W8EOQOSca-McJ5HMq0YeiPWSp0mZyUhO8vGU9iTtzQg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTRhZWE0YTE4Njc5OTNkNTMwNDYwYmYiLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NzM3NTgzOCwiZXhwIjoxNzY3Mzc5NDM4fQ.8k2qk6mBiEJC6RXjReCZsL05gGLHazBNhIMrv1hlrfc
 
 {
-    "title": "Ticket 2",
-    "description": "Description for ticket 2"
+    "title": "Ticket 15",
+    "description": "Description for ticket 15 created via REST client test"
 }

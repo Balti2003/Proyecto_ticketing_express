@@ -7,9 +7,14 @@ const router = express.Router();
 
 //GET api/tickets/
 router.get('/', async (req, res) => {
+    const pageSize = parseInt(req.query.pageSize) || 10;
+    const page = parseInt(req.query.page) || 1; 
+
     try {
-        const tickets = await Ticket.find({});
-        res.status(200).json({ tickets: tickets });
+        const tickets = await Ticket.find().skip((page - 1) * pageSize).limit(pageSize);
+        const total = await Ticket.countDocuments();
+
+        res.status(200).json({ tickets, page, pages: Math.ceil(total / pageSize), currentPage: page });
     } catch (err) {
         res.status(500).json({ message: 'Server error' + err.message });
     }
