@@ -1,22 +1,24 @@
 import express from 'express';
 import Ticket from '../models/Ticket.js';
+import auth from '../middlewares/auth.js';
+import admin from '../middlewares/admin.js';
 
 const router = express.Router();
 
 //GET api/tickets/
 router.get('/', async (req, res) => {
     try {
-        const tickets = await Ticket.find();
+        const tickets = await Ticket.find({});
         res.status(200).json({ tickets: tickets });
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error' + err.message });
     }
 });
 
 //POST api/tickets/
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const ticket = new Ticket({
-        user: req.body.user,
+        user: req.user._id,
         title: req.body.title,
         description: req.body.description,
         priority: req.body.priority,
@@ -27,7 +29,7 @@ router.post('/', async (req, res) => {
         const savedTicket = await ticket.save();
         res.status(201).json({ ticket: savedTicket });
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error' + err.message });
     }
 });
 
@@ -40,12 +42,12 @@ router.get('/:id', async (req, res) => {
         }
         res.status(200).json({ ticket: ticket });
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error' + err.message });
     }
 });
 
 //PUT api/tickets/:id
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     const updates = req.body;
     try {
         const updatedTicket = await Ticket.findByIdAndUpdate(req.params.id, updates, { new: true });
@@ -54,20 +56,20 @@ router.put('/:id', async (req, res) => {
         }
         res.status(200).json({ ticket: updatedTicket });
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error' + err.message });
     }
 });
 
 //DELETE api/tickets/:id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     try {
-        const deletedTicket = await Ticket.findByIdAndDelete(req.params.id);
+        const deletedTicket = await Ticket.findOneAndDelete({ id: req.params.id });
         if (!deletedTicket) {
             return res.status(404).json({ message: 'Ticket not found' });
         }
         res.status(200).json({ message: 'Ticket deleted successfully' });
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error' + err.message });
     }
 });
 
