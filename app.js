@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import usersRoutes from './routes/usersRoutes.js';
 import ticketsRoutes from './routes/ticketsRoutes.js';
+import error from './middlewares/error.js';
 
 const app = express();
 const DB_URL = process.env.NODE_ENV === 'test' 
@@ -23,5 +24,6 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', usersRoutes);
 app.use('/api/tickets', ticketsRoutes);
+app.use(error);
 
 export default app;
