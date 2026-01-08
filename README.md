@@ -10,13 +10,14 @@ Sistema de gestión de tickets desarrollado con **Node.js**, **Express** y **Mon
 - **Búsqueda y Filtrado**: Soporte para filtrado por estado, prioridad y búsqueda por texto mediante middlewares especializados.
 - **Paginación**: Sistema de paginación integrado para el listado de tickets.
 - **Validación**: Validación de esquemas de datos para tickets mediante **Joi**.
+- **Seguridad y Control**: Implementación de **Rate Limiting** para proteger la API contra abusos.
 
 ## 🛠️ Tecnologías Utilizadas
 
 - **Backend**: Node.js (ES Modules).
 - **Framework**: Express.
 - **Base de Datos**: MongoDB con Mongoose.
-- **Seguridad**: JWT, bcryptjs y UUID.
+- **Seguridad**: JWT, bcryptjs, UUID y Rate Limit.
 - **Logging**: Morgan y Winston.
 - **Testing**: Jest y Supertest.
 
@@ -34,7 +35,7 @@ Sistema de gestión de tickets desarrollado con **Node.js**, **Express** y **Mon
 3. **Configura las variables de entorno**:
    ```bash
    Crea un archivo .env en la raiz del proyecto y coloca:
-   PORT=4000
+   PORT=num_puerto
    JWT_SECRET=tu_clave_secreta_aqui
 
 ## 🚀 Uso
@@ -44,6 +45,7 @@ Sistema de gestión de tickets desarrollado con **Node.js**, **Express** y **Mon
    npm run dev (desarrollo con modo watch)
    npm start (produccion)
    npm test (ejecutar tests)
+   npm run db:populate (puebla la base de datos con datos iniciales de prueba)
 
 ## 🛣️ API Endpoints
 
@@ -79,13 +81,21 @@ Sistema de gestión de tickets desarrollado con **Node.js**, **Express** y **Mon
 
 ---
 
+## Ejemplos de consultas (filtro y paginacion)
+
+- **Filtrado por estado y prioridad**: GET /api/tickets?status=open&priority=high
+- **Busqueda por texto(titulo/descripcion)**: GET /api/tickets?search=error
+- **Paginacion personalizada**: GET /api/tickets?page=2&pageSize=5
+
+---
+
 ## 📊 Modelos de Datos
 
 ### 🎫 Ticket
 
 - **id**: UUID único generado automáticamente.
 - **user**: ID del usuario que creó el ticket.
-- **status**: `open`, `in-progress`, `closed`.
+- **status**: `open`, `in progress`, `closed`.
 - **priority**: `low`, `medium`, `high`.
 - **title**: Campo obligatorio.
 - **description**: Campo obligatorio.
@@ -103,7 +113,7 @@ Sistema de gestión de tickets desarrollado con **Node.js**, **Express** y **Mon
 - **password**:  
   - Mínimo de 8 caracteres  
   - Almacenada de forma segura mediante hashing.
-
+  
 ## ✒️ Autor
 
 **Baltasar Lomello**
