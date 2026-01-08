@@ -2,6 +2,10 @@ import 'dotenv/config';
 import express from 'express';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import helmet from 'helmet';
+import cors from 'cors';
+import compression from 'compression';
+import limiter from './helpers/rateLimit.js';
 import usersRoutes from './routes/usersRoutes.js';
 import ticketsRoutes from './routes/ticketsRoutes.js';
 import error from './middlewares/error.js';
@@ -16,6 +20,12 @@ mongoose.connect(DB_URL) // Conexión a la base de datos mongo db
     .catch((err) => console.error('Error connecting to MongoDB:', err));
     
 app.use(morgan('dev')); // middleware para logging de peticiones
+app.use(helmet()); // middleware para seguridad HTTP
+app.use(cors()); // middleware para habilitar CORS
+if (process.env.NODE_ENV === 'prod') {
+    app.use(compression()); // middleware para comprimir respuestas
+    app.use(limiter); // middleware para limitar peticiones
+}
 app.use(express.json()); // middleware para parsear JSON en las peticiones
 
 app.get('/', (req, res) => {
