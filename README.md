@@ -1,6 +1,6 @@
 # Ticketing System Express
 
-Sistema de gestión de tickets educativo desarrollado con **Node.js**, **Express** y **MongoDB**. Esta aplicación permite administrar el ciclo de vida de incidencias mediante una API RESTful, incluyendo gestión de usuarios, autenticación y roles.
+Sistema de gestión de tickets desarrollado con **Node.js**, **Express** y **MongoDB**. Esta aplicación permite administrar el ciclo de vida de incidencias mediante una API RESTful, incluyendo gestión de usuarios, autenticación y roles.
 
 ## 🚀 Características
 
@@ -24,5 +24,86 @@ Sistema de gestión de tickets educativo desarrollado con **Node.js**, **Express
 
 1. **Clona el repositorio**:
    ```bash
-   git clone <tu-url-del-repositorio>
-   cd Proyecto_ticketing_express    
+   git clone https://github.com/Balti2003/Proyecto_ticketing_express.git
+   cd Proyecto_ticketing_express
+   
+2. **Instala las dependencias**:
+   ```bash
+   npm install
+   
+3. **Configura las variables de entorno**:
+   ```bash
+   Crea un archivo .env en la raiz del proyecto y coloca:
+   PORT=4000
+   JWT_SECRET=tu_clave_secreta_aqui
+
+## 🚀 Uso
+
+1. **El proyecto usa los siguientes scripts**:
+   ```bash
+   npm run dev (desarrollo con modo watch)
+   npm start (produccion)
+   npm test (ejecutar tests)
+
+## 🛣️ API Endpoints
+
+### 👤 Usuarios (`/api/users`)
+
+- **POST /signup**  
+  Registro de nuevos usuarios con cifrado de contraseña.
+
+- **POST /login**  
+  Autenticación y generación de token JWT.
+
+---
+
+### 🎫 Tickets (`/api/tickets`)
+
+- **GET /**  
+  Listado paginado con soporte para filtros de estado, prioridad y búsqueda.
+
+- **POST /**  
+  Crear un ticket.  
+  🔒 Requiere autenticación.
+
+- **GET /:id**  
+  Obtener detalles de un ticket por su ID único.
+
+- **PUT /:id**  
+  Actualizar datos de un ticket.  
+  🔒 Requiere autenticación.
+
+- **DELETE /:id**  
+  Eliminar un ticket.  
+  🔐 Solo accesible para Administradores.
+
+---
+
+## 📊 Modelos de Datos
+
+### 🎫 Ticket
+
+- **id**: UUID único generado automáticamente.
+- **user**: ID del usuario que creó el ticket.
+- **status**: `open`, `in-progress`, `closed`.
+- **priority**: `low`, `medium`, `high`.
+- **title**: Campo obligatorio.
+- **description**: Campo obligatorio.
+
+---
+
+### 👤 Usuario
+
+- **id**: UUID único generado automáticamente.
+- **role**: `user` (por defecto) o `admin`.
+- **email**:  
+  - Único  
+  - En minúsculas  
+  - Validado
+- **password**:  
+  - Mínimo de 8 caracteres  
+  - Almacenada de forma segura mediante hashing.
+
+## ✒️ Autor
+
+**Baltasar Lomello**
