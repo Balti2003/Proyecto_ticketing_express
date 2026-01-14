@@ -66,7 +66,8 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', auth, async (req, res) => {
     const updates = req.body;
     try {
-        const updatedTicket = await Ticket.findByIdAndUpdate(req.params.id, updates, { new: true });
+        const updatedTicket = await Ticket.findOneAndUpdate({ id: req.params.id }, updates, { new: true });
+        
         if (!updatedTicket) {
             return res.status(404).json({ message: 'Ticket not found' });
         }
