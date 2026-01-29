@@ -9,6 +9,7 @@ import limiter from './helpers/rateLimit.js';
 import usersRoutes from './routes/usersRoutes.js';
 import ticketsRoutes from './routes/ticketsRoutes.js';
 import error from './middlewares/error.js';
+import commentRoutes from './routes/commentRoutes.js';
 
 const app = express();
 const DB_URL = process.env.NODE_ENV === 'test' 
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', usersRoutes);
 app.use('/api/tickets', ticketsRoutes);
+app.use('/api/comments', commentRoutes);
 app.use(error);
 
 export default app;

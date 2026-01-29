@@ -17,6 +17,7 @@ const ticketSchema = new mongoose.Schema({
         },
         virtuals: true
     },
+    timestamps: true
 });
 
 ticketSchema.index({ id: 1, user: 1 });
